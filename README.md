@@ -5,5 +5,5 @@
 * ## 作業連結區
     [HW0](https://youtu.be/Phr7a4e4zPg)
     
-    ![HW1](https://github.com/allen20021005/DB/blob/main/erd.draw.io.jpg?raw=true)
+    ![HW1](https://github.com/allen20021005/DB/blob/main/erd.draw.io.png?raw=true)
 * ## 專題連結區
