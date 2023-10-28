@@ -1,158 +1,100 @@
 import "./App.css";
-import { useState } from "react";
-import Axios from "axios";
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
 
 function App() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [country, setCountry] = useState("");
-  const [position, setPosition] = useState("");
-  const [wage, setWage] = useState(0);
+  const [customerNumber, setCustomerNumber] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [customerGender, setCustomerGender] = useState('');
+  const [customers, setCustomers] = useState([]);
 
-  const [newWage, setNewWage] = useState(0);
-
-  const [employeeList, setEmployeeList] = useState([]);
-
-  const addEmployee = () => {
-    Axios.post("http://localhost:3001/create", {
-      name: name,
-      age: age,
-      country: country,
-      position: position,
-      wage: wage,
-    }).then(() => {
-      setEmployeeList([
-        ...employeeList,
-        {
-          name: name,
-          age: age,
-          country: country,
-          position: position,
-          wage: wage,
-        },
-      ]);
-    });
+  // 新增顧客
+  const handleCreateCustomer = () => {
+    Axios.post('http://localhost:3001/createcustomer', {
+      customer_number: customerNumber,
+      customer_name: customerName,
+      customer_gender: customerGender,
+    })
+      .then((response) => {
+        console.log(response.data);
+        // 清空输入框或执行其他操作
+        // 重新获取并显示所有顾客
+        fetchCustomers();
+      })
+      .catch((error) => {
+        console.error(error);
+        // 处理错误
+      });
   };
 
-  const getEmployees = () => {
-    Axios.get("http://localhost:3001/employees").then((response) => {
-      setEmployeeList(response.data);
-    });
+  // 获取所有顾客
+  const fetchCustomers = () => {
+    Axios.get('http://localhost:3001/getcustomers')
+      .then((response) => {
+        setCustomers(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  const updateEmployeeWage = (id) => {
-    Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
-      (response) => {
-        setEmployeeList(
-          employeeList.map((val) => {
-            return val.id == id
-              ? {
-                  id: val.id,
-                  name: val.name,
-                  country: val.country,
-                  age: val.age,
-                  position: val.position,
-                  wage: newWage,
-                }
-              : val;
-          })
-        );
-      }
-    );
+  // 刪除顧客的函數
+  const handleDeleteCustomer = (customerId) => { // 使用正确的参数名 customerId
+    Axios.delete(`http://localhost:3001/deletecustomer/${customerId}`) // 使用正确的参数名 customerId
+      .then((response) => {
+        console.log(response.data);
+        // 删除成功后重新获取并显示所有顾客
+        fetchCustomers();
+      })
+      .catch((error) => {
+        console.error(error);
+        // 处理错误
+      });
   };
 
-  const deleteEmployee = (id) => {
-    Axios.delete(`http://localhost:3001/delete/${id}`).then((response) => {
-      setEmployeeList(
-        employeeList.filter((val) => {
-          return val.id != id;
-        })
-      );
-    });
-  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []); // 第二个参数是一个空数组，确保 useEffect 仅在组件挂载时运行一次
 
   return (
-    <div className="App">
-      <div className="information">
-        <label>Name:</label>
+    <div>
+      <h1>新增顧客</h1>
+      <div>
+        <label>顧客電話:</label>
         <input
           type="text"
-          onChange={(event) => {
-            setName(event.target.value);
-          }}
+          value={customerNumber}
+          onChange={(e) => setCustomerNumber(e.target.value)}
         />
-        <label>Age:</label>
-        <input
-          type="number"
-          onChange={(event) => {
-            setAge(event.target.value);
-          }}
-        />
-        <label>Country:</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setCountry(event.target.value);
-          }}
-        />
-        <label>Position:</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setPosition(event.target.value);
-          }}
-        />
-        <label>Wage (year):</label>
-        <input
-          type="number"
-          onChange={(event) => {
-            setWage(event.target.value);
-          }}
-        />
-        <button onClick={addEmployee}>Add Employee</button>
       </div>
-      <div className="employees">
-        <button onClick={getEmployees}>Show Employees</button>
-
-        {employeeList.map((val, key) => {
-          return (
-            <div className="employee">
-              <div>
-                <h3>Name: {val.name}</h3>
-                <h3>Age: {val.age}</h3>
-                <h3>Country: {val.country}</h3>
-                <h3>Position: {val.position}</h3>
-                <h3>Wage: {val.wage}</h3>
-              </div>
-              <div>
-                <input
-                  type="text"
-                  placeholder="2000..."
-                  onChange={(event) => {
-                    setNewWage(event.target.value);
-                  }}
-                />
-                <button
-                  onClick={() => {
-                    updateEmployeeWage(val.id);
-                  }}
-                >
-                  {" "}
-                  Update
-                </button>
-
-                <button
-                  onClick={() => {
-                    deleteEmployee(val.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          );
-        })}
+      <div>
+        <label>顧客姓名:</label>
+        <input
+          type="text"
+          value={customerName}
+          onChange={(e) => setCustomerName(e.target.value)}
+        />
       </div>
+      <div>
+        <label>顧客性別:</label>
+        <input
+          type="text"
+          value={customerGender}
+          onChange={(e) => setCustomerGender(e.target.value)}
+        />
+      </div>
+      <button onClick={handleCreateCustomer}>新增顧客</button>
+
+      <h2>顧客清單</h2>
+      {customers.map((customer) => (
+        <div  key={customer.customer_ids}>
+          <p>
+            顧客電話: {customer.customer_number}, 顧客姓名: {customer.customer_name}, 顧客性別: {customer.customer_gender}
+          </p>
+          <button onClick={() => handleDeleteCustomer(customer.customer_id)}>刪除顧客</button>
+        </div>
+      ))}
     </div>
   );
 }

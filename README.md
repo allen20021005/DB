@@ -6,4 +6,7 @@
     [HW0](https://youtu.be/Phr7a4e4zPg)
     
     [HW1](https://youtu.be/VNeXyo0yo1A)
+    
+    [HW2](https://youtu.be/eShjLSvOcg8)
+
 * ## 專題連結區
