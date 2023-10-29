@@ -1,0 +1,65 @@
+/* Modify background color, text color, font size, and more */
+body {
+  background-color: #f0f0f0; /* Background color for the entire page */
+  font-family: Arial, sans-serif; /* Font family for text */
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+.information {
+  background-color: #ffffff; /* Background color for information section */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Box shadow for a subtle shadow effect */
+  margin-bottom: 20px;
+}
+
+.users {
+  background-color: #ffffff; /* Background color for users section */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Box shadow for a subtle shadow effect */
+}
+
+label {
+  font-weight: bold; /* Make labels bold */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="password"] {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc; /* Add a 1px solid border with a light gray color */
+  border-radius: 3px;
+}
+
+button {
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth background color transition on hover */
+}
+
+button:hover {
+  background-color: #0056b3; /* Button background color on hover */
+}
+
+.user {
+  border: 1px solid #ccc; /* Border for user elements */
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 3px;
+}
+
+.user h3 {
+  margin: 5px 0; /* Margin for user headings */
+}
